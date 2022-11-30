@@ -1,32 +1,22 @@
 package com.tg;
 
-import java.sql.SQLOutput;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.CheckedOutputStream;
 
 public class Main {
     public static void main(String[] args) {
-        String myString = "Moj lep string. Danes je lep dan.";
+        StringBuilder htmlText = new StringBuilder("<h1>My Heading</h1>");
+        htmlText.append("<h2>Sub-heading<h2>");
+        htmlText.append("<p>This is a paragraph about something.</p>");
+        htmlText.append("<p>This is another paragraph about something else.</p>");
+        htmlText.append("<h2>Summary</h2>");
+        htmlText.append("<p>Here is the summary.</p>");
 
-        System.out.println(myString.replaceAll(".", "Y")); // . replaces each character, but does not change the original string
-        System.out.println(myString.replaceAll("^M", "xy")); // ^ represents the beginning of the string
-        System.out.println(myString.replaceAll("an\\.$", "the end")); // $ represents the end of the string and \\ is for writing a special character
-        System.out.println(myString.matches("Moj lep string")); // the whole string has to match, ^ $ do not work here
-        System.out.println(myString.replaceAll("[aei]", "X")); // replaces all 'a', 'e', 'i' characters with 'X'
-        System.out.println(myString.replaceAll("[aei][ne]", "Y")); // replaces all combinations ('an', 'ae', 'en', 'ee', 'in', 'ie')
-        System.out.println("harry".replaceAll("[hH]arry", "Harry"));
-        System.out.println(myString.replaceAll("[^an]", "L")); // replace everything, except 'a' and 'n'
-        System.out.println(myString.replaceAll("[a-f3-8]", "X")); // replace in range a-f and 3-8
-        System.out.println(myString.replaceAll("(?i)[A-F3-8]", "X")); // (?i) eliminates case sensitivity
-        System.out.println(myString.replaceAll("\\d", "X")); // replaces all digits
-        System.out.println(myString.replaceAll("\\D", "X")); // replaces all non-digits
-        System.out.println(myString.replaceAll("\\s", "")); // removes all white space
-        System.out.println(myString.replaceAll("\t", "X"));
-        System.out.println(myString.replaceAll("\\S", "")); // removes all non-white space characters
-        System.out.println(myString.replaceAll("\\w", "")); // removes a-z, A-Z, 0-9 and underscore
-        System.out.println(myString.replaceAll("\\b", "***")); // each world has been surrounded by the replacement string
-        System.out.println("abcDeee76".replaceAll("^abcDe{3}", "***")); // {3} indicates the number of copies of the preceding character that must occur ('eee')
-        System.out.println("abcDeee76".replaceAll("^abcDe+", "YYY")); // + indicates any non-negative number of copies of the preceding character
-        System.out.println("abcD76".replaceAll("^abcDe*", "***")); // * 'e' can appear any number of times or not at all
-        System.out.println("abcDeeeee76".replaceAll("^abcDe{2,5}", "+")); // * 'e' can appear 2-5 times
-        System.out.println("hhj".replaceAll("h+i*j", "-")); // at least one 'h' followed by zero or more 'i' followed by 'j'
+        String h2Pattern = ".*<h2>.*"; // . will match any character and * means zero or more (there can be anything before and anything after <h2>)
+        Pattern pattern = Pattern.compile(h2Pattern);
+        Matcher matcher = pattern.matcher(htmlText);
+        System.out.println(matcher.matches());
+
     }
 }
